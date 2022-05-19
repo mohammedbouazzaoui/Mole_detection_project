@@ -2,6 +2,8 @@
 data/
 notebook/
 pybin/images/
+delme/
+pybin/delme/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
