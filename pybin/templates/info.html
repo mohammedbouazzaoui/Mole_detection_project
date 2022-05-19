@@ -27,11 +27,14 @@
 <div class="container">
     <div class="center">
     <h2></h2>
-    <h1>Server status:</h1>
+    <h1>Used model info:</h1>
     <h3>______________</h3>
     <h3></h3>
-    <h3>Alive and kicking!</h3>
-    <h3>Datetime  : {{dt}}</h3>
+    {% for m in info %}
+      <tr>
+        <h4>{{m}}</h4>
+      </tr>
+    {% endfor %}
     </div>
     </div>
 </body>
