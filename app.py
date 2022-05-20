@@ -41,7 +41,9 @@ from tensorflow.keras.preprocessing.image import save_img
 ################################
 
 from flask import Flask,render_template,request
-from pybin.myfunctions import debug
+
+import io
+from pybin.mylib.myfunctions import debug
 
 
 
@@ -51,6 +53,7 @@ from pybin.myfunctions import debug
 
 app = Flask(__name__, template_folder="./pybin/templates")
 
+#global modelfile
 
 DEBUG=True
 
@@ -58,8 +61,13 @@ DEBUG=True
 debug(DEBUG,"start")
 #load the model
 #model=tf.keras.models.load_model('./cifar_model.h128_3')
-model=tf.keras.models.load_model('./pybin/models/cifar_model.h128_3')
-print(model.summary())
+#model=tf.keras.models.load_model('./pybin/models/cifar_model.h128_3')
+global modelfile
+modelfile="./pybin/models/activemodel"
+debug(DEBUG,modelfile)
+model=tf.keras.models.load_model(modelfile)
+#debug(DEBUG,model.summary())
+
 # load the image
 #img1 = load_img('./pybin/images/ISIC_0029313.jpg')
 
@@ -109,8 +117,17 @@ def predictimage(img,model):
         
 @app.route('/info/', methods = ['POST', 'GET'])
 def info():
-    #global loadedmodel
-    return render_template('info.html')
+    
+    #only way to get the summary into a string
+    stream = io.StringIO()
+    model.summary(print_fn=lambda x: stream.write(x + '\n'))
+    summary_string = stream.getvalue()
+    stream.close()
+
+    info=summary_string.splitlines()
+    debug(DEBUG,modelfile)
+
+    return render_template('info.html',info=info)
 
 
 
@@ -165,6 +182,36 @@ def image_predict():
     debug(DEBUG,seven[predict])
     return render_template('image_show_prediction.html',predict=seven[predict],imagename=imagename)
 
+@app.route('/camera/', methods = ['POST', 'GET'])
+def camera():     
+    #import cv2 as cv
+    cam_port = 0
+    cam = cv2.VideoCapture(cam_port)
+    result, image = cam.read()
+    if result:
+        cv2.imwrite("./static/imgtopredict.jpg", image)
+    else:
+        print("No image detected. Please! try again")
+    imagefile='./static/imgtopredict.jpg'
+    image = load_img(imagefile)
+    predict=predictimage(image,model)
+
+    #The 7 classes of skin cancer lesions included in this dataset are:
+    seven={
+            'nv':'Melanocytic nevi',
+            'mel':'Melanoma',
+            'bkl':'Benign keratosis-like lesions',
+            'bcc':'Basal cell carcinoma',
+            'akiec':'Actinic keratoses',
+            'vas':'Vascular lesions',
+            'df':'Dermatofibroma'
+            }
+    
+    #print(seven[predict])
+    debug(DEBUG,seven[predict])
+    imagename='camera'
+    return render_template('image_show_prediction.html',predict=seven[predict],imagename=imagename)
+ 
 
 @app.route('/', methods = ['POST', 'GET'])
 def roott():
@@ -174,4 +221,5 @@ def roott():
 # MAIN
 #######################################
 
+#######################################
 app.run(host='localhost', port=5000)

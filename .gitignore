@@ -4,6 +4,10 @@ notebook/
 pybin/images/
 delme/
 pybin/delme/
+backup/
+.vscode/
+image_classifier/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
