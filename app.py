@@ -84,9 +84,13 @@ def predictimage(img,model):
 
     # convert to numpy array
     img = img_to_array(img)
-    img = cv2.resize(img, (128, 128))
-    img=np.reshape(img, (-1, 128, 128, 3)) 
+    img = cv2.resize(img, (32, 32))
 
+    #use same scaling as in training model ????????
+    img=img/255
+    
+    img=np.reshape(img, (-1, 32, 32, 3)) 
+    
     #predict
     result=model.predict(img)
     result=result[0]
