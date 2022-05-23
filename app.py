@@ -84,17 +84,18 @@ def predictimage(img,model):
 
     # convert to numpy array
     img = img_to_array(img)
-    img = cv2.resize(img, (32, 32))
+    img = cv2.resize(img, (64, 64))
 
     #use same scaling as in training model ????????
-    img=img/255
+    img=img/255.
     
-    img=np.reshape(img, (-1, 32, 32, 3)) 
+    img=np.reshape(img, (-1, 64, 64, 3)) 
     
     #predict
     result=model.predict(img)
+    debug(DEBUG,result)
     result=result[0]
-    
+    debug(DEBUG,result)
     # label encoding to numeric values from text
     #The 7 classes of skin cancer lesions included in this dataset are:
     seven={
@@ -107,14 +108,32 @@ def predictimage(img,model):
             'df':'Dermatofibroma'
             }
     le = LabelEncoder()
-     
     le.fit(list(seven.keys()))
     LabelEncoder()
-    print(le.classes_)
+
+    som=sum(result)
+    reslist=[]
     for i in range(7):
-        if result[i] == 1:
-            break
-    return str(le.classes_[i])
+        reslist.append([int(100 * result[i]/som),le.classes_[i]])
+    #debug(DEBUG,reslist)
+    reslist.sort()
+    debug(DEBUG,reslist)
+    #print(le.classes_)
+    #for i in range(7):
+    #    if result[i] == 1:
+    #        break
+    if reslist[-1][0] > 60:
+        return f'Predicted type : {seven[reslist[-1][1]]}  with {reslist[-1][0]}% accuratie.'
+    else:
+        return f'Cannot determine type :    # {reslist[-1][1]} {reslist[-1][0]}% \
+                                            # {reslist[-2][1]} {reslist[-2][0]}% \
+                                            # {reslist[-3][1]} {reslist[-3][0]}% \
+                                            # {reslist[-4][1]} {reslist[-4][0]}% \
+                                            # {reslist[-5][1]} {reslist[-5][0]}% \
+                                            # {reslist[-6][1]} {reslist[-6][0]}% \
+                                            # {reslist[-7][1]} {reslist[-7][0]}% \
+                                            '
+
     
     
 
@@ -157,6 +176,9 @@ def image_predict():
     form_data = request.form   # get image filename
     debug(DEBUG,form_data)
     imagename=form_data['myfile']
+    if imagename == '':
+        return render_template('image_load.html')
+
     imagefile="./pybin/images/"+imagename
     
     
@@ -183,8 +205,8 @@ def image_predict():
             }
     
     #print(seven[predict])
-    debug(DEBUG,seven[predict])
-    return render_template('image_show_prediction.html',predict=seven[predict],imagename=imagename)
+    debug(DEBUG,predict)
+    return render_template('image_show_prediction.html',predict=predict,imagename=imagename)
 
 @app.route('/camera/', methods = ['POST', 'GET'])
 def camera():     
@@ -212,9 +234,9 @@ def camera():
             }
     
     #print(seven[predict])
-    debug(DEBUG,seven[predict])
+    debug(DEBUG,predict)
     imagename='camera'
-    return render_template('image_show_prediction.html',predict=seven[predict],imagename=imagename)
+    return render_template('image_show_prediction.html',predict=predict,imagename=imagename)
  
 
 @app.route('/', methods = ['POST', 'GET'])
