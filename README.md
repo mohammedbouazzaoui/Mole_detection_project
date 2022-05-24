@@ -1,4 +1,53 @@
 # mole_detection
+# --------------
+
+## Author : Bouazzaoui Mohammed
+
+## Timeline :
+
+	start 	16/5/2022
+	end 	24/5/2022
+
+## Description : see the exercice objectives at the bottom
+
+	The application was developed in python and jupyter notebooks
+
+## Installation : 
+
+	Copy the structure as is and run the python app into a python environment.
+
+## Usage 
+
+ 	The application when run will launch a local web server wich you can access from the webbrowser with the link :
+ 	http://localhost:5000/
+
+
+## Libraries to install
+
+	autokeras                    1.0.19
+	Flask                        2.1.2
+	keras                        2.9.0
+	Keras-Preprocessing          1.1.2
+	keras-tuner                  1.1.2
+	matplotlib                   3.5.2
+	matplotlib-inline            0.1.3
+	numpy                        1.22.3
+	opencv-python                4.5.5.64
+	pandas                       1.4.2
+	Pillow                       9.1.1
+	scikit-learn                 1.1.0
+	scipy                        1.8.0
+	seaborn                      0.11.2
+	sklearn                      0.0
+	tensorflow                   2.9.0
+	tensorflow-estimator         2.9.0
+	tensorflow-gpu               2.9.0
+	tensorflow-io-gcs-filesystem 0.26.0
+
+
+# The exercice : mole_detection
+#-------------------------------
+
 
 - Repository: `challenge-mole`
 - Type of Challenge: `Consolidation`
