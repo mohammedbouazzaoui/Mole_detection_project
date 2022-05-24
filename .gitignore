@@ -6,7 +6,7 @@ pybin/delme/
 backup/
 .vscode/
 image_classifier/
-
+notebook/.ipynb_checkpoints/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

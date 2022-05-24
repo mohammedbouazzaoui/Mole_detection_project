@@ -2,9 +2,11 @@
 """
 Created on Thu May  5 09:52:11 2022
 
-@author: bmadmin
+@author: Bouazzaoui Mohammed
 """
 
-def debug(DEBUG,m):
+
+def debug(DEBUG, m):
+    # print debugger information on terminal
     if DEBUG:
-        print("\nDEBUG@@@:---",m,"---@@@\n")
+        print("\nDEBUG@@@:---", m, "---@@@\n")
