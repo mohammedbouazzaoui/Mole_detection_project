@@ -106,10 +106,10 @@ def predictimage(img, model):
     debug(DEBUG, reslist)
 
     # set '> 57%'  as a treshold for a good prediction
-    if reslist[-1][0] > 57:
+    if reslist[-1][0] >= 55:
         return f"Predicted type : {seven[reslist[-1][1]]}  with {reslist[-1][0]}% accuratie."
     else:
-        return f"Cannot determine type :    # {reslist[-1][1]} {reslist[-1][0]}% \
+        return f"Prediction under 55% !:    # {reslist[-1][1]} {reslist[-1][0]}% \
                                             # {reslist[-2][1]} {reslist[-2][0]}% \
                                             # {reslist[-3][1]} {reslist[-3][0]}% \
                                             # {reslist[-4][1]} {reslist[-4][0]}% \
