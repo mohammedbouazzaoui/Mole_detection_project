@@ -48,6 +48,9 @@
 	tensorflow-gpu               2.9.0
 	tensorflow-io-gcs-filesystem 0.26.0
 
+## Contact:
+mailto:bzzmo@hotmail.com
+https://www.linkedin.com/in/mbouazzaoui/
 
 # The exercice : mole_detection
 #-------------------------------
@@ -183,4 +186,6 @@ We will randomly select 10 presenters to showcase their project in front of the 
 “Everyone should have health insurance? I say everyone should have health care. I'm not selling insurance.”
 _- Dennis Kucinich_
 
-![You've got this!](https://media.giphy.com/media/eLujANBginsZl8PZZL/giphy.gif)
+
+
+
